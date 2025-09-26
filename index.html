@@ -1,679 +1,818 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Instagram Following Checker</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <style>
+      :root {
+        --instagram-gradient-1: #405de6; /* Blue */
+        --instagram-gradient-2: #5851db; /* Purple */
+        --instagram-gradient-3: #833ab4; /* Dark Purple */
+        --instagram-gradient-4: #c13584; /* Pink */
+        --instagram-gradient-5: #e1306c; /* Red */
+        --instagram-gradient-6: #fd1d1d; /* Orange-Red */
+        --instagram-gradient-7: #fcaf45; /* Orange */
 
-</head>
-<style>
-    :root {
-    --instagram-gradient-1: #405DE6; /* Blue */
-    --instagram-gradient-2: #5851DB; /* Purple */
-    --instagram-gradient-3: #833AB4; /* Dark Purple */
-    --instagram-gradient-4: #C13584; /* Pink */
-    --instagram-gradient-5: #E1306C; /* Red */
-    --instagram-gradient-6: #FD1D1D; /* Orange-Red */
-    --instagram-gradient-7: #FCAF45; /* Orange */
+        --bg-light: #fafafa;
+        --text-dark: #262626;
+        --text-medium: #8e8e8e;
+        --border-light: #dbdbdb;
+        --shadow-light: rgba(0, 0, 0, 0.05);
+        --button-hover-shadow: rgba(0, 0, 0, 0.15);
+        --success-color: #4caf50;
+        --warning-color: #ff9800;
+      }
 
-    --bg-light: #FAFAFA;
-    --text-dark: #262626;
-    --text-medium: #8e8e8e;
-    --border-light: #DBDBDB;
-    --shadow-light: rgba(0, 0, 0, 0.05);
-    --button-hover-shadow: rgba(0, 0, 0, 0.15);
-}
+      body {
+        font-family: "Montserrat", sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: var(--bg-light);
+        color: var(--text-dark);
+        line-height: 1.6;
+        overflow-x: hidden;
+      }
 
-body {
-    font-family: 'Montserrat', sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: var(--bg-light);
-    color: var(--text-dark);
-    line-height: 1.6;
-    overflow-x: hidden; /* Prevent horizontal scroll */
-}
-
-/* Hero Section */
-.hero {
-    background: linear-gradient(45deg, 
-                var(--instagram-gradient-1), 
-                var(--instagram-gradient-3), 
-                var(--instagram-gradient-5), 
-                var(--instagram-gradient-7));
-    color: white;
-    text-align: center;
-    padding: 80px 20px;
-    min-height: 100vh; /* Ensure full viewport height */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    position: relative;
-    overflow: hidden;
-}
-
-.hero-content {
-    max-width: 800px;
-    z-index: 1; /* Ensure content is above any background effects */
-    animation: fadeInScale 1s ease-out;
-}
-
-.hero h1 {
-    font-size: clamp(2.5em, 5vw, 4em); /* Responsive font size */
-    margin-bottom: 20px;
-    font-weight: 700;
-}
-
-.hero p {
-    font-size: clamp(1em, 2vw, 1.3em); /* Responsive font size */
-    margin-bottom: 40px;
-    opacity: 0.9;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.hero-icon {
-    font-size: clamp(4em, 8vw, 6em);
-    margin-bottom: 20px;
-    animation: bounceIn 1s ease-out;
-}
-
-/* General Button Styles */
-.btn {
-    background-color: white;
-    color: var(--instagram-gradient-4);
-    padding: 12px 25px;
-    border: none;
-    border-radius: 30px; /* More rounded */
-    font-size: 1.1em;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-weight: 600;
-    box-shadow: 0 4px 10px var(--shadow-light);
-    display: inline-flex; /* Align icon and text */
-    align-items: center;
-    gap: 8px;
-    text-decoration: none; /* For potential links */
-}
-
-.btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 15px var(--button-hover-shadow);
-}
-
-.primary-btn {
-    background: linear-gradient(45deg, var(--instagram-gradient-4), var(--instagram-gradient-6));
-    color: white;
-}
-
-.primary-btn:hover {
-    background: linear-gradient(45deg, var(--instagram-gradient-6), var(--instagram-gradient-4));
-}
-
-.large-btn {
-    padding: 15px 35px;
-    font-size: 1.2em;
-    margin-top: 20px;
-}
-
-.small-btn {
-    padding: 8px 15px;
-    font-size: 0.9em;
-    border-radius: 20px;
-    margin-top: 10px; /* Space from list */
-    background-color: var(--border-light); /* Lighter background for copy */
-    color: var(--text-dark);
-}
-
-.small-btn:hover {
-    background-color: var(--text-medium);
-    color: white;
-}
-
-/* Main Content Area */
-main {
-    max-width: 1200px;
-    margin: 40px auto;
-    padding: 20px;
-    animation: fadeIn 0.8s ease-out;
-}
-
-/* Card Style for Sections */
-.card {
-    background-color: white;
-    border-radius: 12px;
-    box-shadow: 0 5px 20px var(--shadow-light);
-    padding: 30px;
-    margin-bottom: 40px;
-}
-
-h2 {
-    color: var(--instagram-gradient-4);
-    text-align: center;
-    margin-bottom: 30px;
-    font-size: clamp(1.6em, 3vw, 2.2em);
-    font-weight: 700;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 15px;
-}
-
-h2 i {
-    color: var(--instagram-gradient-1);
-}
-
-h3 {
-    color: var(--text-dark);
-    margin-top: 0;
-    margin-bottom: 15px;
-    font-size: clamp(1.1em, 2.5vw, 1.4em);
-    font-weight: 600;
-    text-align: center;
-    padding-bottom: 10px;
-    border-bottom: 2px solid var(--border-light);
-}
-
-.input-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px;
-    margin-top: 20px; /* Space from checkbox */
-    margin-bottom: 30px;
-}
-
-.input-group {
-    margin-bottom: 15px;
-    position: relative; /* For list-count positioning */
-    padding-bottom: 20px; /* Space for count */
-}
-
-label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: 600;
-    color: var(--text-dark);
-    font-size: 1.05em;
-}
-
-textarea {
-    width: 100%;
-    height: 180px;
-    padding: 15px;
-    border: 1px solid var(--border-light);
-    border-radius: 8px;
-    font-size: 1em;
-    resize: vertical;
-    font-family: 'Montserrat', sans-serif;
-    box-sizing: border-box;
-    transition: all 0.2s ease-in-out;
-}
-
-textarea:focus {
-    outline: none;
-    border-color: var(--instagram-gradient-3);
-    box-shadow: 0 0 0 3px rgba(131, 58, 180, 0.2); /* Using RGB values directly for var(--instagram-gradient-3) */
-}
-/* Helper text beneath textarea */
-small {
-    display: block;
-    margin-top: 5px;
-    color: var(--text-medium);
-    font-size: 0.85em;
-}
-
-/* Checkbox specific styles */
-.checkbox-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 20px;
-    color: var(--text-dark);
-    font-weight: 500;
-}
-
-.checkbox-container input[type="checkbox"] {
-    appearance: none; /* Hide default checkbox */
-    width: 20px;
-    height: 20px;
-    border: 2px solid var(--instagram-gradient-4);
-    border-radius: 4px;
-    cursor: pointer;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0; /* Prevent shrinking */
-}
-
-.checkbox-container input[type="checkbox"]:checked {
-    background-color: var(--instagram-gradient-4);
-    border-color: var(--instagram-gradient-4);
-}
-
-.checkbox-container input[type="checkbox"]:checked::before {
-    content: '\2713'; /* Checkmark character */
-    font-size: 16px;
-    color: white;
-}
-
-/* List Count Display */
-.list-count {
-    display: block;
-    position: absolute; /* Position relative to .input-group or .result-box */
-    bottom: -5px; /* Adjust as needed */
-    right: 0;
-    font-size: 0.85em;
-    color: var(--text-medium);
-    background-color: var(--bg-light);
-    padding: 2px 8px;
-    border-radius: 5px;
-    border: 1px solid var(--border-light);
-}
-
-.results-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 30px;
-    margin-top: 30px;
-}
-
-.result-box {
-    background-color: var(--bg-light);
-    border: 1px solid var(--border-light);
-    border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0 2px 10px var(--shadow-light);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    position: relative; /* For list-count positioning */
-    padding-bottom: 45px; /* Space for count and button */
-}
-
-.result-list {
-    list-style: none;
-    padding: 0;
-    max-height: 250px; /* Fixed height for scrolling */
-    overflow-y: auto;
-    border-top: 1px solid var(--border-light);
-    padding-top: 10px;
-    margin-top: 15px;
-    width: 100%; /* Ensure list takes full width */
-    text-align: left; /* Align list items left */
-}
-
-.result-list li {
-    padding: 10px 0;
-    border-bottom: 1px dashed var(--border-light);
-    font-size: 0.95em;
-    color: var(--text-dark);
-}
-
-.result-list li:last-child {
-    border-bottom: none;
-}
-
-.hidden {
-    display: none;
-}
-
-/* Specific positioning for copy button and count */
-.result-box .copy-btn {
-    position: absolute;
-    bottom: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-}
-
-.result-box .list-count {
-    bottom: 10px; /* Aligned with copy button */
-    right: 10px;
-    left: auto; /* Override default positioning */
-    background-color: transparent; /* No background for count in results */
-    border: none;
-}
-
-
-/* Animations */
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes fadeInScale {
-    from { opacity: 0; transform: scale(0.9); }
-    to { opacity: 1; transform: scale(1); }
-}
-
-@keyframes bounceIn {
-    0% { transform: scale(0.3); opacity: 0; }
-    50% { transform: scale(1.05); opacity: 1; }
-    70% { transform: scale(0.9); }
-    100% { transform: scale(1); }
-}
-
-/* Responsive Adjustments */
-@media (max-width: 900px) {
-    main {
-        padding: 15px;
-    }
-    .input-container {
-        grid-template-columns: 1fr; /* Stack inputs on smaller screens */
-    }
-    .results-grid {
-        grid-template-columns: 1fr; /* Stack results on smaller screens */
-    }
-    .card {
-        padding: 25px;
-    }
-    .hero {
-        padding: 60px 15px;
-    }
-    .checkbox-container {
+      /* Hero Section */
+      .hero {
+        background: linear-gradient(
+          45deg,
+          var(--instagram-gradient-1),
+          var(--instagram-gradient-3),
+          var(--instagram-gradient-5),
+          var(--instagram-gradient-7)
+        );
+        color: white;
+        text-align: center;
+        padding: 80px 20px;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         flex-direction: column;
-        text-align: center;
-    }
-}
+        position: relative;
+        overflow: hidden;
+      }
 
-@media (max-width: 500px) {
-    .hero h1 {
-        font-size: 2em;
-    }
-    .hero p {
-        font-size: 0.95em;
-    }
-    .btn {
-        padding: 10px 20px;
-        font-size: 1em;
-    }
-    .large-btn {
-        padding: 12px 25px;
-        font-size: 1.1em;
-    }
-    h2 {
-        font-size: 1.5em;
-        gap: 10px;
-    }
-    h3 {
-        font-size: 1.2em;
-    }
-    .hero-icon {
-        font-size: 4em;
-    }
-    .list-count {
-        position: static; /* Remove absolute positioning on small screens */
-        margin-top: 10px; /* Add some space */
-        left: auto;
-        right: auto;
-        bottom: auto;
-        width: fit-content;
-        text-align: center;
+      .hero-content {
+        max-width: 800px;
+        z-index: 1;
+        animation: fadeInScale 1s ease-out;
+      }
+
+      .hero h1 {
+        font-size: clamp(2.5em, 5vw, 4em);
+        margin-bottom: 20px;
+        font-weight: 700;
+      }
+
+      .hero p {
+        font-size: clamp(1em, 2vw, 1.3em);
+        margin-bottom: 40px;
+        opacity: 0.9;
+        max-width: 600px;
         margin-left: auto;
         margin-right: auto;
-    }
-    .result-box .copy-btn {
-        position: static; /* Remove absolute positioning on small screens */
-        transform: none;
+      }
+
+      .hero-icon {
+        font-size: clamp(4em, 8vw, 6em);
+        margin-bottom: 20px;
+        animation: bounceIn 1s ease-out;
+      }
+
+      /* General Button Styles */
+      .btn {
+        background-color: white;
+        color: var(--instagram-gradient-4);
+        padding: 12px 25px;
+        border: none;
+        border-radius: 30px;
+        font-size: 1.1em;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: 600;
+        box-shadow: 0 4px 10px var(--shadow-light);
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        text-decoration: none;
+      }
+
+      .btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 15px var(--button-hover-shadow);
+      }
+
+      .primary-btn {
+        background: linear-gradient(
+          45deg,
+          var(--instagram-gradient-4),
+          var(--instagram-gradient-6)
+        );
+        color: white;
+      }
+
+      .primary-btn:hover {
+        background: linear-gradient(
+          45deg,
+          var(--instagram-gradient-6),
+          var(--instagram-gradient-4)
+        );
+      }
+
+      .large-btn {
+        padding: 15px 35px;
+        font-size: 1.2em;
+        margin-top: 20px;
+      }
+
+      .small-btn {
+        padding: 8px 15px;
+        font-size: 0.9em;
+        border-radius: 20px;
+        margin-top: 10px;
+        background-color: var(--border-light);
+        color: var(--text-dark);
+      }
+
+      .small-btn:hover {
+        background-color: var(--text-medium);
+        color: white;
+      }
+
+      /* Main Content Area */
+      main {
+        max-width: 1200px;
+        margin: 40px auto;
+        padding: 20px;
+        animation: fadeIn 0.8s ease-out;
+      }
+
+      /* Card Style for Sections */
+      .card {
+        background-color: white;
+        border-radius: 12px;
+        box-shadow: 0 5px 20px var(--shadow-light);
+        padding: 30px;
+        margin-bottom: 40px;
+      }
+
+      h2 {
+        color: var(--instagram-gradient-4);
+        text-align: center;
+        margin-bottom: 30px;
+        font-size: clamp(1.6em, 3vw, 2.2em);
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 15px;
+      }
+
+      h2 i {
+        color: var(--instagram-gradient-1);
+      }
+
+      h3 {
+        color: var(--text-dark);
+        margin-top: 0;
+        margin-bottom: 15px;
+        font-size: clamp(1.1em, 2.5vw, 1.4em);
+        font-weight: 600;
+        text-align: center;
+        padding-bottom: 10px;
+        border-bottom: 2px solid var(--border-light);
+      }
+
+      .input-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+        margin-top: 20px;
+        margin-bottom: 30px;
+      }
+
+      .input-group {
+        margin-bottom: 15px;
+        position: relative;
+        padding-bottom: 20px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: var(--text-dark);
+        font-size: 1.05em;
+      }
+
+      textarea {
+        width: 100%;
+        height: 180px;
+        padding: 15px;
+        border: 1px solid var(--border-light);
+        border-radius: 8px;
+        font-size: 1em;
+        resize: vertical;
+        font-family: "Montserrat", sans-serif;
+        box-sizing: border-box;
+        transition: all 0.2s ease-in-out;
+      }
+
+      textarea:focus {
+        outline: none;
+        border-color: var(--instagram-gradient-3);
+        box-shadow: 0 0 0 3px rgba(131, 58, 180, 0.2);
+      }
+
+      /* Helper text beneath textarea */
+      small {
+        display: block;
+        margin-top: 5px;
+        color: var(--text-medium);
+        font-size: 0.85em;
+      }
+
+      /* Checkbox specific styles */
+      .checkbox-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        margin-bottom: 20px;
+        color: var(--text-dark);
+        font-weight: 500;
+      }
+
+      .checkbox-container input[type="checkbox"] {
+        appearance: none;
+        width: 20px;
+        height: 20px;
+        border: 2px solid var(--instagram-gradient-4);
+        border-radius: 4px;
+        cursor: pointer;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+
+      .checkbox-container input[type="checkbox"]:checked {
+        background-color: var(--instagram-gradient-4);
+        border-color: var(--instagram-gradient-4);
+      }
+
+      .checkbox-container input[type="checkbox"]:checked::before {
+        content: "\2713";
+        font-size: 16px;
+        color: white;
+      }
+
+      /* List Count Display */
+      .list-count {
+        display: block;
+        position: absolute;
+        bottom: -5px;
+        right: 0;
+        font-size: 0.85em;
+        color: var(--text-medium);
+        background-color: var(--bg-light);
+        padding: 2px 8px;
+        border-radius: 5px;
+        border: 1px solid var(--border-light);
+      }
+
+      .results-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 30px;
+        margin-top: 30px;
+      }
+
+      .result-box {
+        background-color: var(--bg-light);
+        border: 1px solid var(--border-light);
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 2px 10px var(--shadow-light);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        position: relative;
+        padding-bottom: 45px;
+      }
+
+      .result-list {
+        list-style: none;
+        padding: 0;
+        max-height: 250px;
+        overflow-y: auto;
+        border-top: 1px solid var(--border-light);
+        padding-top: 10px;
         margin-top: 15px;
-    }
-    .result-box {
-        padding-bottom: 20px; /* Reset padding */
-    }
-}
-</style>
-<body>
+        width: 100%;
+        text-align: left;
+      }
+
+      .result-list li {
+        padding: 10px 0;
+        border-bottom: 1px dashed var(--border-light);
+        font-size: 0.95em;
+        color: var(--text-dark);
+      }
+
+      .result-list li:last-child {
+        border-bottom: none;
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      /* Specific positioning for copy button and count */
+      .result-box .copy-btn {
+        position: absolute;
+        bottom: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      .result-box .list-count {
+        bottom: 10px;
+        right: 10px;
+        left: auto;
+        background-color: transparent;
+        border: none;
+      }
+
+      /* Toast notification */
+      .toast {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        padding: 15px 25px;
+        background-color: var(--success-color);
+        color: white;
+        border-radius: 5px;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.3s ease;
+      }
+
+      .toast.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* Animations */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes fadeInScale {
+        from {
+          opacity: 0;
+          transform: scale(0.9);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      @keyframes bounceIn {
+        0% {
+          transform: scale(0.3);
+          opacity: 0;
+        }
+        50% {
+          transform: scale(1.05);
+          opacity: 1;
+        }
+        70% {
+          transform: scale(0.9);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+
+      /* Responsive Adjustments */
+      @media (max-width: 900px) {
+        main {
+          padding: 15px;
+        }
+        .input-container {
+          grid-template-columns: 1fr;
+        }
+        .results-grid {
+          grid-template-columns: 1fr;
+        }
+        .card {
+          padding: 25px;
+        }
+        .hero {
+          padding: 60px 15px;
+        }
+        .checkbox-container {
+          flex-direction: column;
+          text-align: center;
+        }
+      }
+
+      @media (max-width: 500px) {
+        .hero h1 {
+          font-size: 2em;
+        }
+        .hero p {
+          font-size: 0.95em;
+        }
+        .btn {
+          padding: 10px 20px;
+          font-size: 1em;
+        }
+        .large-btn {
+          padding: 12px 25px;
+          font-size: 1.1em;
+        }
+        h2 {
+          font-size: 1.5em;
+          gap: 10px;
+        }
+        h3 {
+          font-size: 1.2em;
+        }
+        .hero-icon {
+          font-size: 4em;
+        }
+        .list-count {
+          position: static;
+          margin-top: 10px;
+          left: auto;
+          right: auto;
+          bottom: auto;
+          width: fit-content;
+          text-align: center;
+          margin-left: auto;
+          margin-right: auto;
+        }
+        .result-box .copy-btn {
+          position: static;
+          transform: none;
+          margin-top: 15px;
+        }
+        .result-box {
+          padding-bottom: 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
     <header class="hero">
-        <div class="hero-content">
-           
-            <h1>Instagram Following Checker</h1>
-            <p>Paste your follower and following lists to easily find out who isn't following you back, and more!</p>
-            <button id="getStartedBtn" class="btn primary-btn">Get Started <i class="fas fa-arrow-right"></i></button>
-        </div>
+      <div class="hero-content">
+        <i class="fab fa-instagram hero-icon"></i>
+        <h1>Instagram Following Checker</h1>
+        <p>
+          Paste your follower and following lists to easily find out who isn't
+          following you back, and more!
+        </p>
+        <button id="getStartedBtn" class="btn primary-btn">
+          Get Started <i class="fas fa-arrow-right"></i>
+        </button>
+      </div>
     </header>
 
     <main id="mainContent" class="hidden">
-        <section class="card input-section">
-            <h2><i class="fas fa-list"></i> Your Instagram Lists</h2>
-            <div class="checkbox-container">
-                <input type="checkbox" id="filterHandle" checked>
-                <label for="filterHandle">Only include items starting with '@' (Instagram handles)</label>
-            </div>
-            <div class="input-container">
-                <div class="input-group">
-                    <label for="followersInput">Your Followers List:</label>
-                    <textarea id="followersInput" placeholder="Paste your Instagram Followers list here, one username per line."></textarea>
-                    <small>Tip: Copy from an Instagram tool or manually list them.</small>
-                    <span class="list-count" id="followersCount">Items: 0</span>
-                </div>
-                <div class="input-group">
-                    <label for="followingInput">Your Following List:</label>
-                    <textarea id="followingInput" placeholder="Paste your Instagram Following list here, one username per line."></textarea>
-                    <small>Tip: Copy from an Instagram tool or manually list them.</small>
-                    <span class="list-count" id="followingCount">Items: 0</span>
-                </div>
-            </div>
-            <button id="compareBtn" class="btn primary-btn large-btn"><i class="fas fa-sync-alt"></i> Compare Lists</button>
-        </section>
+      <section class="card input-section">
+        <h2><i class="fas fa-list"></i> Your Instagram Lists</h2>
+        <div class="checkbox-container">
+          <input type="checkbox" id="filterHandlesOnly" checked />
+          <label for="filterHandlesOnly"
+            >Only compare Instagram @usernames (exclude names/other text)</label
+          >
+        </div>
+        <div class="input-container">
+          <div class="input-group">
+            <label for="followersInput">Your Followers List:</label>
+            <textarea
+              id="followersInput"
+              placeholder="Paste your Instagram Followers list here, one username or name per line."
+            ></textarea>
+            <small
+              >Tip: Copy from an Instagram tool or manually list them.</small
+            >
+            <span class="list-count" id="followersCount">Items: 0</span>
+          </div>
+          <div class="input-group">
+            <label for="followingInput">Your Following List:</label>
+            <textarea
+              id="followingInput"
+              placeholder="Paste your Instagram Following list here, one username or name per line."
+            ></textarea>
+            <small
+              >Tip: Copy from an Instagram tool or manually list them.</small
+            >
+            <span class="list-count" id="followingCount">Items: 0</span>
+          </div>
+        </div>
+        <button id="compareBtn" class="btn primary-btn large-btn">
+          <i class="fas fa-sync-alt"></i> Compare Lists
+        </button>
+      </section>
 
-        <section class="card results-section">
-            <h2><i class="fas fa-chart-bar"></i> Comparison Results</h2>
-            <div class="results-grid">
-                <div class="result-box">
-                    <h3>Users Not Following You Back</h3>
-                    <ul id="notFollowingBack" class="result-list">
-                        <li>No results yet.</li>
-                    </ul>
-                    <span class="list-count" id="notFollowingBackCount">Items: 0</span>
-                    <button class="btn small-btn copy-btn" data-list="notFollowingBack"><i class="fas fa-copy"></i> Copy List</button>
-                </div>
-                <div class="result-box">
-                    <h3>Users You Don't Follow Back</h3>
-                    <ul id="youDontFollowBack" class="result-list">
-                        <li>No results yet.</li>
-                    </ul>
-                    <span class="list-count" id="youDontFollowBackCount">Items: 0</span>
-                    <button class="btn small-btn copy-btn" data-list="youDontFollowBack"><i class="fas fa-copy"></i> Copy List</button>
-                </div>
-                <div class="result-box">
-                    <h3>Mutual Followers (You Follow & They Follow You)</h3>
-                    <ul id="mutualFollowers" class="result-list">
-                        <li>No results yet.</li>
-                    </ul>
-                    <span class="list-count" id="mutualFollowersCount">Items: 0</span>
-                    <button class="btn small-btn copy-btn" data-list="mutualFollowers"><i class="fas fa-copy"></i> Copy List</button>
-                </div>
-            </div>
-        </section>
+      <section class="card results-section">
+        <h2><i class="fas fa-chart-bar"></i> Comparison Results</h2>
+        <div class="results-grid">
+          <div class="result-box">
+            <h3>Users Not Following You Back</h3>
+            <ul id="notFollowingBack" class="result-list">
+              <li>No results yet.</li>
+            </ul>
+            <span class="list-count" id="notFollowingBackCount">Items: 0</span>
+            <button class="btn small-btn copy-btn" data-list="notFollowingBack">
+              <i class="fas fa-copy"></i> Copy List
+            </button>
+          </div>
+          <div class="result-box">
+            <h3>Users You Don't Follow Back</h3>
+            <ul id="youDontFollowBack" class="result-list">
+              <li>No results yet.</li>
+            </ul>
+            <span class="list-count" id="youDontFollowBackCount">Items: 0</span>
+            <button
+              class="btn small-btn copy-btn"
+              data-list="youDontFollowBack"
+            >
+              <i class="fas fa-copy"></i> Copy List
+            </button>
+          </div>
+          <div class="result-box">
+            <h3>Mutual Followers (You Follow & They Follow You)</h3>
+            <ul id="mutualFollowers" class="result-list">
+              <li>No results yet.</li>
+            </ul>
+            <span class="list-count" id="mutualFollowersCount">Items: 0</span>
+            <button class="btn small-btn copy-btn" data-list="mutualFollowers">
+              <i class="fas fa-copy"></i> Copy List
+            </button>
+          </div>
+        </div>
+      </section>
     </main>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-    const getStartedBtn = document.getElementById('getStartedBtn');
-    const mainContent = document.getElementById('mainContent');
-    const heroSection = document.querySelector('.hero');
+    <div id="toast" class="toast"></div>
 
-    const followersInput = document.getElementById('followersInput');
-    const followingInput = document.getElementById('followingInput');
-    const compareBtn = document.getElementById('compareBtn');
-    const filterHandleCheckbox = document.getElementById('filterHandle');
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const getStartedBtn = document.getElementById('getStartedBtn');
+        const mainContent = document.getElementById('mainContent');
+        const heroSection = document.querySelector('.hero');
 
-    const followersCountSpan = document.getElementById('followersCount');
-    const followingCountSpan = document.getElementById('followingCount');
+        const followersInput = document.getElementById('followersInput');
+        const followingInput = document.getElementById('followingInput');
+        const compareBtn = document.getElementById('compareBtn');
+        const filterHandlesOnlyCheckbox = document.getElementById('filterHandlesOnly');
 
-    const notFollowingBackList = document.getElementById('notFollowingBack');
-    const youDontFollowBackList = document.getElementById('youDontFollowBack');
-    const mutualFollowersList = document.getElementById('mutualFollowers');
-    
-    const notFollowingBackCountSpan = document.getElementById('notFollowingBackCount');
-    const youDontFollowBackCountSpan = document.getElementById('youDontFollowBackCount');
-    const mutualFollowersCountSpan = document.getElementById('mutualFollowersCount');
-    
-    const copyButtons = document.querySelectorAll('.copy-btn');
+        const followersCountSpan = document.getElementById('followersCount');
+        const followingCountSpan = document.getElementById('followingCount');
 
-    // Helper function to process input text into a Set
-    function processInputToList(inputText, applyFilter) {
-        let items = inputText.split('\n')
-                             .map(item => item.trim())
-                             .filter(item => item !== ''); // Remove empty lines
-
-        if (applyFilter) {
-            // Only keep items that start with '@'
-            items = items.filter(item => item.startsWith('@'));
-        }
-        return new Set(items.map(item => item.toLowerCase())); // Convert to Set and lowercase
-    }
-
-    // Function to update item counts for input fields
-    function updateInputCounts() {
-        const applyFilter = filterHandleCheckbox.checked;
-        const processedFollowers = processInputToList(followersInput.value, applyFilter);
-        const processedFollowing = processInputToList(followingInput.value, applyFilter);
+        const notFollowingBackList = document.getElementById('notFollowingBack');
+        const youDontFollowBackList = document.getElementById('youDontFollowBack');
+        const mutualFollowersList = document.getElementById('mutualFollowers');
         
-        followersCountSpan.textContent = `Items: ${processedFollowers.size}`;
-        followingCountSpan.textContent = `Items: ${processedFollowing.size}`;
-    }
+        const notFollowingBackCountSpan = document.getElementById('notFollowingBackCount');
+        const youDontFollowBackCountSpan = document.getElementById('youDontFollowBackCount');
+        const mutualFollowersCountSpan = document.getElementById('mutualFollowersCount');
+        
+        const copyButtons = document.querySelectorAll('.copy-btn');
+        const toast = document.getElementById('toast');
 
-    // Event listeners for input changes to update counts dynamically
-    followersInput.addEventListener('input', updateInputCounts);
-    followingInput.addEventListener('input', updateInputCounts);
-    filterHandleCheckbox.addEventListener('change', updateInputCounts); // Also update on checkbox change
-
-    // Initial count update on load
-    updateInputCounts();
-
-    // Smooth scroll and transition from hero to main content
-    getStartedBtn.addEventListener('click', () => {
-        heroSection.style.opacity = '0';
-        heroSection.style.transform = 'translateY(-20px)';
-        setTimeout(() => {
-            heroSection.classList.add('hidden');
-            mainContent.classList.remove('hidden');
-            mainContent.style.opacity = '0'; 
-            mainContent.style.transform = 'translateY(20px)';
-            void mainContent.offsetWidth; 
-            mainContent.style.opacity = '1';
-            mainContent.style.transform = 'translateY(0)';
+        // Show toast notification
+        function showToast(message, isSuccess = true) {
+            toast.textContent = message;
+            toast.style.backgroundColor = isSuccess ? '#4CAF50' : '#FF9800';
+            toast.classList.add('show');
             
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        }, 500); 
-    });
-
-    compareBtn.addEventListener('click', () => {
-        const applyFilter = filterHandleCheckbox.checked;
-
-        const list1 = processInputToList(followersInput.value, applyFilter); // Your Followers
-        const list2 = processInputToList(followingInput.value, applyFilter); // Your Following
-
-        if (list1.size === 0 && list2.size === 0) {
-            alert('Please paste at least one list with valid items to compare!');
-            return;
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
         }
 
-        // Clear previous results
-        notFollowingBackList.innerHTML = '';
-        youDontFollowBackList.innerHTML = '';
-        mutualFollowersList.innerHTML = '';
-        
-        // Reset counts
-        notFollowingBackCountSpan.textContent = 'Items: 0';
-        youDontFollowBackCountSpan.textContent = 'Items: 0';
-        mutualFollowersCountSpan.textContent = 'Items: 0';
+        // Function to check if a line should be skipped (Instagram artifacts)
+        function shouldSkipLine(line) {
+            const skipPatterns = [
+                /followed by .* \+ \d+ more/i,
+                /\+ \d+ more/i,
+                /suggested for you/i,
+                /see all suggestions?/i,
+                /people you may know/i,
+                /similar to /i,
+                /popular accounts?/i,
+                /verified accounts?/i
+            ];
+            
+            return skipPatterns.some(pattern => pattern.test(line.toLowerCase()));
+        }
 
+        // Simple function to process input text into a Set
+        function processInputToList(inputText) {
+            // Split by lines, trim, remove empty lines and Instagram artifacts
+            const items = inputText.split('\n')
+                                 .map(item => item.trim())
+                                 .filter(item => item !== '')
+                                 .filter(item => !shouldSkipLine(item))
+                                 .map(item => item.toLowerCase());
+            
+            return new Set(items);
+        }
 
-        const notFollowingBack = new Set(); 
-        const youDontFollowBack = new Set(); 
-        const mutualFollowers = new Set();    
+        // Function to update item counts for input fields
+        function updateInputCounts() {
+            const processedFollowers = processInputToList(followersInput.value);
+            const processedFollowing = processInputToList(followingInput.value);
+            
+            followersCountSpan.textContent = `Items: ${processedFollowers.size}`;
+            followingCountSpan.textContent = `Items: ${processedFollowing.size}`;
+        }
 
-        // Calculate 'Users Not Following You Back'
-        list2.forEach(item => { 
-            if (!list1.has(item)) { 
-                notFollowingBack.add(item);
-            }
+        // Event listeners for input changes to update counts dynamically
+        followersInput.addEventListener('input', updateInputCounts);
+        followingInput.addEventListener('input', updateInputCounts);
+
+        // Remove the checkbox event listener since we're not using filtering
+        filterHandlesOnlyCheckbox.addEventListener('change', () => {
+            showToast('Filtering disabled - comparing all items as entered');
+            updateInputCounts();
         });
 
-        // Calculate 'Users You Don't Follow Back'
-        list1.forEach(item => { 
-            if (!list2.has(item)) { 
-                youDontFollowBack.add(item);
-            }
+        // Initial count update on load
+        updateInputCounts();
+
+        // Smooth scroll and transition from hero to main content
+        getStartedBtn.addEventListener('click', () => {
+            heroSection.style.opacity = '0';
+            heroSection.style.transform = 'translateY(-20px)';
+            setTimeout(() => {
+                heroSection.classList.add('hidden');
+                mainContent.classList.remove('hidden');
+                mainContent.style.opacity = '0'; 
+                mainContent.style.transform = 'translateY(20px)';
+                void mainContent.offsetWidth; 
+                mainContent.style.opacity = '1';
+                mainContent.style.transform = 'translateY(0)';
+                
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            }, 500); 
         });
 
-        // Calculate 'Mutual Followers'
-        list1.forEach(item => { 
-            if (list2.has(item)) { 
-                mutualFollowers.add(item);
+        compareBtn.addEventListener('click', () => {
+            const followers = processInputToList(followersInput.value); // People who follow YOU
+            const following = processInputToList(followingInput.value); // People YOU follow
+
+            if (followers.size === 0 && following.size === 0) {
+                showToast('Please paste at least one list to compare!', false);
+                return;
             }
+
+            // Clear previous results
+            notFollowingBackList.innerHTML = '';
+            youDontFollowBackList.innerHTML = '';
+            mutualFollowersList.innerHTML = '';
+            
+            // Reset counts
+            notFollowingBackCountSpan.textContent = 'Items: 0';
+            youDontFollowBackCountSpan.textContent = 'Items: 0';
+            mutualFollowersCountSpan.textContent = 'Items: 0';
+
+            const notFollowingBack = new Set(); 
+            const youDontFollowBack = new Set(); 
+            const mutualFollowers = new Set();    
+
+            // CORRECT LOGIC:
+            // "Users Not Following You Back" = People YOU follow BUT who DON'T follow you back
+            following.forEach(person => { 
+                if (!followers.has(person)) { 
+                    notFollowingBack.add(person);
+                }
+            });
+
+            // "Users You Don't Follow Back" = People who follow you BUT you DON'T follow back
+            followers.forEach(person => { 
+                if (!following.has(person)) { 
+                    youDontFollowBack.add(person);
+                }
+            });
+
+            // "Mutual Followers" = People who follow you AND you follow back
+            followers.forEach(person => { 
+                if (following.has(person)) { 
+                    mutualFollowers.add(person);
+                }
+            });
+
+            // Display results and update counts
+            displayResults(notFollowingBack, notFollowingBackList, notFollowingBackCountSpan, 'Everyone you follow also follows you back! 🎉');
+            displayResults(youDontFollowBack, youDontFollowBackList, youDontFollowBackCountSpan, 'You follow everyone who follows you! 🎉');
+            displayResults(mutualFollowers, mutualFollowersList, mutualFollowersCountSpan, 'No mutual followers found.');
+            
+            showToast(`Comparison completed! Found ${notFollowingBack.size} not following you back, ${youDontFollowBack.size} you don't follow back, and ${mutualFollowers.size} mutual followers.`);
         });
 
-        // Display results and update counts
-        displayResults(notFollowingBack, notFollowingBackList, notFollowingBackCountSpan, 'Everyone you follow also follows you back! 🎉');
-        displayResults(youDontFollowBack, youDontFollowBackList, youDontFollowBackCountSpan, 'You follow everyone who follows you! 🎉');
-        displayResults(mutualFollowers, mutualFollowersList, mutualFollowersCountSpan, 'No mutual followers found.');
-    });
-
-    function displayResults(resultSet, ulElement, countSpanElement, emptyMessage) {
-        if (resultSet.size === 0) {
-            const li = document.createElement('li');
-            li.textContent = emptyMessage;
-            ulElement.appendChild(li);
-        } else {
-            Array.from(resultSet).sort().forEach(item => {
+        function displayResults(resultSet, ulElement, countSpanElement, emptyMessage) {
+            if (resultSet.size === 0) {
                 const li = document.createElement('li');
-                li.textContent = item;
+                li.textContent = emptyMessage;
+                li.style.textAlign = 'center';
+                li.style.fontStyle = 'italic';
+                li.style.color = 'var(--text-medium)';
                 ulElement.appendChild(li);
-            });
-        }
-        countSpanElement.textContent = `Items: ${resultSet.size}`;
-    }
-
-    // Copy to Clipboard functionality
-    copyButtons.forEach(button => {
-        button.addEventListener('click', (event) => {
-            const targetListId = event.target.dataset.list;
-            const targetList = document.getElementById(targetListId);
-            
-            const itemsToCopy = Array.from(targetList.children)
-                                    .map(li => li.textContent)
-                                    .filter(text => !text.includes('No results yet.') && !text.includes('Everyone you follow also follows you back') && !text.includes('You follow everyone who follows you') && !text.includes('No mutual followers found.'));
-            
-            const textToCopy = itemsToCopy.join('\n');
-
-            if (textToCopy) {
-                navigator.clipboard.writeText(textToCopy)
-                    .then(() => {
-                        const originalHtml = button.innerHTML;
-                        const originalBg = button.style.backgroundColor;
-                        const originalColor = button.style.color;
-
-                        button.innerHTML = '<i class="fas fa-check"></i> Copied!';
-                        button.style.backgroundColor = '#4CAF50'; /* Green */
-                        button.style.color = 'white';
-                        setTimeout(() => {
-                            button.innerHTML = originalHtml;
-                            button.style.backgroundColor = originalBg; 
-                            button.style.color = originalColor;
-                        }, 1500);
-                    })
-                    .catch(err => {
-                        console.error('Failed to copy text: ', err);
-                        alert('Failed to copy list. Please try again or copy manually.');
-                    });
             } else {
-                alert('There is no list to copy!');
+                Array.from(resultSet).sort().forEach(item => {
+                    const li = document.createElement('li');
+                    li.textContent = item;
+                    ulElement.appendChild(li);
+                });
             }
+            countSpanElement.textContent = `Items: ${resultSet.size}`;
+        }
+
+        // Copy to Clipboard functionality
+        copyButtons.forEach(button => {
+            button.addEventListener('click', (event) => {
+                const targetListId = event.target.dataset.list || event.target.closest('.copy-btn').dataset.list;
+                const targetList = document.getElementById(targetListId);
+                
+                const itemsToCopy = Array.from(targetList.children)
+                                        .map(li => li.textContent)
+                                        .filter(text => !text.includes('No results yet.') && 
+                                                       !text.includes('Everyone you follow also follows you back') && 
+                                                       !text.includes('You follow everyone who follows you') && 
+                                                       !text.includes('No mutual followers found.'));
+                
+                const textToCopy = itemsToCopy.join('\n');
+
+                if (textToCopy) {
+                    navigator.clipboard.writeText(textToCopy)
+                        .then(() => {
+                            showToast('List copied to clipboard!');
+                        })
+                        .catch(err => {
+                            console.error('Failed to copy text: ', err);
+                            showToast('Failed to copy list. Please try again or copy manually.', false);
+                        });
+                } else {
+                    showToast('There is no list to copy!', false);
+                }
+            });
         });
+
+        // Add clear buttons for input fields
+        function createClearButton(textarea) {
+            const clearBtn = document.createElement('button');
+            clearBtn.innerHTML = '<i class="fas fa-times"></i>';
+            clearBtn.className = 'btn small-btn';
+            clearBtn.style.position = 'absolute';
+            clearBtn.style.right = '10px';
+            clearBtn.style.top = '10px';
+            clearBtn.title = 'Clear field';
+            
+            clearBtn.addEventListener('click', () => {
+                textarea.value = '';
+                updateInputCounts();
+                showToast('Field cleared!');
+            });
+            
+            textarea.parentElement.style.position = 'relative';
+            textarea.parentElement.appendChild(clearBtn);
+        }
+
+        createClearButton(followersInput);
+        createClearButton(followingInput);
     });
-});
-    </script>
-</body>
+</script>
+  </body>
 </html>
